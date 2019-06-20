@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
+import axios from 'axios';
 import './App.css';
 import Landing from './components/landing';
 import SignIn from './components/signIn';
@@ -11,7 +12,8 @@ class App extends Component {
     render() {
 
     return (
-      <body>
+
+<div>
       <header>
       <nav>
         <Link className="nav-btn"  to='/'>Main Page</Link>
@@ -31,7 +33,8 @@ class App extends Component {
 
 
       </main>
-      </body>
+  </div>
+
 
     );
   }
