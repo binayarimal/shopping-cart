@@ -1,39 +1,23 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {Link} from 'react-router-dom'
-class ShopList extends Component {
+class ShopListEdit extends Component {
   constructor(){
     super()
     this.state={
       name :"",
       description :"",
-      shopList:[]
     }
   }
 
-  componentDidMount(){
-    fetch("/shopList")
-    .then( res => res.json())
-    .then( lists => this.setState({shopList:lists}))
-    .catch(err => console.log(err))
-
-  }
   submitHandler(e){
     e.preventDefault();
     const form = {
       name:this.state.name,
       description:this.state.description};
-      axios.post("/shopList/create",form)
+      axios.post(`/shopList/${this.props.match.params.id}/update`,form)
       .then( res =>   this.componentDidMount())
       .catch(err => console.log(err));
     }
-    deleteHandler(e, listId){
-        e.preventDefault();
-        let id = listId;
-        axios.post(`/shopList/${id}/delete`, id)
-        .then( res => this.componentDidMount() )
-        .catch(err => console.log(err));
-      }
 
     render() {
       return (
@@ -53,22 +37,8 @@ class ShopList extends Component {
             onChange = {(e)=>this.setState({description:e.target.value})} />
           <input type="submit"/>
          </form>
-         <div>
-          <ul>
-          {this.state.shopList.map((list,index) =>
-           <li key = {index}>
-            <Link  to = {`/ShopList/${list.id}`} >{list.name}</Link>
-            <button onClick = {(e)=>this.deleteHandler(e,list.id)}>delete</button>
-            <Link to = {`/ShopList/${list.id}/edit`}>edit</Link>
-
-           </li>
-
-          )}
-          </ul>
-         </div>
-
         </section>
       )
     }
   }
-  export default ShopList
+  export default ShopListEdit
