@@ -15,7 +15,7 @@ class ShopListEdit extends Component {
       name:this.state.name,
       description:this.state.description};
       axios.post(`/shopList/${this.props.match.params.id}/update`,form)
-      .then( res =>   this.componentDidMount())
+      .then( () =>   this.props.history.push('/ShopList'))
       .catch(err => console.log(err));
     }
 

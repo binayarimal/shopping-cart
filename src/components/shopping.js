@@ -24,7 +24,7 @@ class ShopList extends Component {
       name:this.state.name,
       description:this.state.description};
       axios.post("/shopList/create",form)
-      .then( res =>   this.componentDidMount())
+      .then( res =>   console.log(res))
       .catch(err => console.log(err));
     }
     deleteHandler(e, listId){

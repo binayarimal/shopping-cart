@@ -6,6 +6,7 @@ class Items extends Component {
     this.state={
       item :"",
       itemList:[],
+      email:""
     }
   }
 
@@ -33,7 +34,6 @@ class Items extends Component {
       e.preventDefault();
       let id ={itemId: item.id}
       if (item.status === "added"){
-
       axios.post(`/ShopList/${this.props.match.params.id}/items/${item.id}/mark`, id)
       .then( (res) => {  this.componentDidMount();
       console.log(res)})
@@ -42,20 +42,27 @@ class Items extends Component {
       axios.post(`/ShopList/${this.props.match.params.id}/items/${item.id}/unMark`,id )
       .then( (res) => {  this.componentDidMount();})
         .catch(err => console.log(err));
-
     }
 
-
+    }
+    collabHandler(e){
+        e.preventDefault();
+          let body = {email:this.state.email};
+          console.log(body);
+        axios.post(`/shopList/${this.props.match.params.id}/collab`, body)
+        .then( res => this.componentDidMount() )
+        .catch(err => console.log(err));
     }
   deleteHandler(e, itemId){
         e.preventDefault();
         let id = itemId;
         axios.post(`/shopList/${this.props.match.params.id}/items/${id}/delete`, id)
-        .then( res => this.componentDidMount() )
+        .then( res => console.log(res) )
         .catch(err => console.log(err));
       }
     render() {
       return (
+        <div>
         <section>
         <form onSubmit = {(e)=>this.submitHandler(e)}>
         <input
@@ -79,6 +86,17 @@ class Items extends Component {
         </div>
 
         </section>
+        <section>
+        <form onSubmit = {(e)=>this.collabHandler(e)}>
+        <input
+        type="email"
+        placeholder="Enter collaborator email"
+        value = {this.state.email}
+        onChange = {(e)=>this.setState({email:e.target.value})} />
+        <input type="submit"/>
+        </form>
+        </section>
+        </div>
       )
     }
 

@@ -1,25 +1,69 @@
 
+import axios from 'axios';
 import React, { Component } from 'react';
 
  class SignUp extends Component {
+   constructor(){
+     super()
+     this.state={
+       email :"",
+       password :"",
+       passwordConfirmation:"",
+     }
+   }
+   signUp(e){
+     e.preventDefault();
+     const form = {
+       email:this.state.email,
+       password:this.state.password,
+       passwordConfrimation:this.state.passwordCondirmation};
+       axios.post("/users",form)
+       .then( res =>  console.log(res))
+       .catch(err => console.log(err));
+     }
    render() {
      return (
-      <form action="/users/sign_in" method="post">
-
-
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" class="form-control" name="email" aria-describedby="emailHelp" placeholder="Enter email">
+      <form  onSubmit = {(e)=>this.signUp(e)}>
+        <div >
+          <label>Email</label>
+          <input
+          type="email"
+          class="form-control"
+          name="email"
+          aria-describedby="emailHelp"
+          placeholder="Enter email"
+          value = {this.state.email}
+          onChange = {(e)=>this.setState({email:e.target.value})}>
           </input>
         </div>
 
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" class="form-control" name="password" aria-describedby="passwordHelp" placeholder="Enter password">
+        <div>
+          <label>Password</label>
+          <input
+           type="password"
+           class="form-control"
+           name="password"
+           aria-describedby="passwordHelp"
+           placeholder="Enter password"
+           value = {this.state.password}
+           onChange = {(e)=>this.setState({password:e.target.value})}>
          </input>
         </div>
 
-        <button type="submit" class="btn btn-primary">Sign In</button>
+        <div>
+          <label>Password Confirmation</label>
+          <input
+           type="password"
+           class="form-control"
+           name="passwordConfirmation"
+           aria-describedby="passwordHelp"
+           placeholder="Enter password"
+           value = {this.state.passwordConfrimation}
+           onChange = {(e)=>this.setState({passwordConfirmation:e.target.value})}>
+         </input>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Sign Up</button>
       </form>
     )
   }
